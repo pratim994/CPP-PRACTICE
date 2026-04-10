@@ -4,6 +4,8 @@
 #include <thread>
 #include <algorithm>
 #include <functional>
+#include <chrono>
+
 
 template<typename Iterator, typename T>
 struct accumulate_block
@@ -65,14 +67,22 @@ T parallel_accumulate(Iterator first, Iterator last, T init)
 
 int main()
 {
-    std::vector<int> data;
+std::vector<int> data;
 
-    for (int i = 1; i <= 1000; ++i)
-        data.push_back(i);
+for (int i = 1; i <= 1000; ++i)
+    data.push_back(i);
 
-    int result = parallel_accumulate(data.begin(), data.end(), 0);
+auto start = std::chrono::high_resolution_clock::now();
 
-    std::cout << "Sum = " << result << std::endl;
+
+int result = parallel_accumulate(data.begin(), data.end(), 0);
+
+
+auto stop = std::chrono::high_resolution_clock::now();
+
+auto dur = duration_cast<std::chrono::nanoseconds>(stop - start);
+
+std::cout << "Sum = " << result <<  "         Duration:       " << dur <<'\n';
 
     return 0;
 }
