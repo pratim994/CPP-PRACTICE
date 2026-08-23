@@ -1,3 +1,7 @@
+.pyc
+pycache
+
+.venv
 .o
 .exe 
 .make
